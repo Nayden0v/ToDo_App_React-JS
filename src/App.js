@@ -1,25 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import AddTodo from './Components/AddTodo';
+import Header from './Components/Header';
+import SwitchTheme from './Components/Theme';
+import TodoList from './Components/TodoList';
+import Counter from './Components/TodosCounter';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App(){
+    return (
+        <div>
+           <SwitchTheme />
+           <Header /> 
+           <AddTodo />
+           <TodoList />
+           <Counter />
+        </div>
+    )
 }
-
-export default App;
