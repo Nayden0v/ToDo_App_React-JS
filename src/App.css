@@ -100,12 +100,12 @@ input::placeholder{
     display: grid;
     background-color: none;
     color: var(--li-color);
-    margin-top: 1ch;
-    font-size: 3.5rem;
+    margin-top: 5ch;
+    font-size: 0.5rem;
     font-family: 'Tangerine', serif;
     list-style-type: decimal;
     border-radius: 2ch;
-    right:2.5ch;
+    right:15ch;
 }
 
 .list--container li {

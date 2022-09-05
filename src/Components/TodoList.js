@@ -1,12 +1,10 @@
-import TodoList from './TodoItem.js'
+// import TodoItem from './TodoItem.js'
 
-export default function GetTodo(){
-    const todoLi = TodoList.map(item=><li>{item.title} <button className='remove--todo'>🗑</button></li>)
-
+export default function TodoList(props){
     return (
         <div>
             <ul className='list--container'>
-                {todoLi}
+                <li>{props.title} <button className='remove--todo'>🗑</button></li>
             </ul>
         </div>
     )

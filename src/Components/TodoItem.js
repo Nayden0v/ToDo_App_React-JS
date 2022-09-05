@@ -14,9 +14,4 @@ export default  [
         title:"todo3",
         completed:false,
     },
-    {
-        id:4,
-        title:"todo4",
-        completed:false,
-    },
 ]
