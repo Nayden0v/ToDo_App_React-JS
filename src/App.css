@@ -153,22 +153,49 @@ input::placeholder{
     border-style: none;
     position: relative;
     cursor: pointer;
-    margin:1ch;
-    margin-right: 0ch;
+    margin:-3.2ch;
+    margin-right: 2ch;
     float: right;
     background-color: var(--li-color-bg);
 }
 
 .remove--todo:hover{
     font-size: 1.5rem;
-    color: var(--btnactions-color2);
+    color: rgb(101, 8, 8);
     font:larger;
     display: block;
     border-style: none;
     position: relative;
     cursor: pointer;
-    margin:1ch;
-    margin-right: 0ch;
+    margin:-3.2ch;
+    margin-right: 2ch;
+    float: right;
+    background-color: var(--li-color-bg);
+}
+
+.check--todo {
+    font-size: 1.5rem;
+    color: rgb(26, 204, 91);
+    font:larger;
+    border-style: none;
+    position: relative;
+    cursor: pointer;
+    margin:-3.5ch;
+    margin-right: 4ch;
+    float: right;
+    background-color: var(--li-color-bg);
+}
+
+.check--todo:hover{
+    font-size: 1.5rem;
+    color: rgb(9, 108, 45);
+    font:larger;
+    display: block;
+    border-style: none;
+    position: relative;
+    cursor: pointer;
+    margin:-3.5ch;
+    margin-right: 4ch;
     float: right;
     background-color: var(--li-color-bg);
 }

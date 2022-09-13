@@ -1,11 +1,24 @@
-// import TodoItem from './TodoItem.js'
+import TodoItem from './TodoItem.js'
+import React, { Component } from 'react'
 
-export default function TodoList(props){
-    return (
+
+
+class TodoList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  };
+    }
+
+
+    render() {
+        return (
         <div>
             <ul className='list--container'>
-                <li>{props.title} <button className='remove--todo'>🗑</button></li>
+                {this.props.todos.map(todo=> <TodoItem {...todo} removeTodo={this.props.removeTodo}/>)}
             </ul>
         </div>
-    )
+        );
+    }
 }
+
+export default TodoList;

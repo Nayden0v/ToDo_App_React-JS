@@ -1,16 +1,16 @@
-import TodoList from './TodoItem.js'
+// import TodoList from './TodoItem.js'
 
-export default function Counter(){
-    const count = TodoList.length
+export default function Counter(props){
+    const countTotal = props.count.length
     return (
-    <div class="todo-stats">
-        <div class="total-tasks">
-          Total Tasks: <span>{count}</span>
+    <div className="todo-stats">
+        <div className="total-tasks">
+          Total Tasks: <span>{countTotal}</span>
         </div>
-        <div class="completed-tasks">
+        <div className="completed-tasks">
           Completed Tasks: <span>0</span>
         </div>
-        <div class="remaining-tasks">
+        <div className="remaining-tasks">
           Remaining Tasks: <span>0</span>
         </div>
       </div>
