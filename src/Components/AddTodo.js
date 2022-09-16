@@ -16,6 +16,7 @@ class AddTodo extends Component {
             this.props.addTodo(this.state.value)
             this._inputElement.value="";
             this.setState({value:""});
+            this._inputElement.focus();
         };
 
         e.preventDefault();
