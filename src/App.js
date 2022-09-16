@@ -14,7 +14,7 @@ class App extends Component {
          };
     }
 
-    addTodo=(title,e)=>{
+    addTodo=(title)=>{
         let todoItem = {
             id:new Date().getTime().toString(),
             title: title,
@@ -25,8 +25,6 @@ class App extends Component {
             todos:[...this.state.todos,todoItem]
         })
 
-        console.log(e);
-        // target = null;
 
 
     }
