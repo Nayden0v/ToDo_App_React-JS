@@ -1,17 +1,18 @@
-// import TodoList from './TodoItem.js'
+
 
 export default function Counter(props){
-    const countTotal = props.count.length
+    const countTotal = props.todos.length
+    const completedTasks = props.todos.filter((todo)=>todo.isComplete === true);
     return (
     <div className="todo-stats">
         <div className="total-tasks">
           Total Tasks: <span>{countTotal}</span>
         </div>
         <div className="completed-tasks">
-          Completed Tasks: <span>0</span>
+          Completed Tasks: <span>{completedTasks.length}</span>
         </div>
         <div className="remaining-tasks">
-          Remaining Tasks: <span>0</span>
+          Remaining Tasks: <span>{countTotal - completedTasks.length}</span>
         </div>
       </div>
     )

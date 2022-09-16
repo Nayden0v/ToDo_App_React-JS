@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
-import TodoList from './TodoList';
 
 class TodoItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            key:this.props.id,
-            title:this.props.title
-        };
+        this.state = {};
     }
+
+
 
     render() {
         return (
             <div className='todo'> 
-                <li key={this.state.key}><span>{this.state.title}</span></li>
-                <button onClick={()=>{this.props.removeTodo(this.state.key)}} className='remove--todo'>X</button>
-                <button className='check--todo'>&#10004;</button>
+                <li className={!this.props.isComplete?null:"completed"}><span>{this.props.title}</span></li>
+                <button onClick={()=>{this.props.removeTodo(this.props.id)}} className='remove--todo'>X</button>
+                <button onClick={()=>{this.props.checkTodo(this.props.id)}} className='check--todo'>&#10004;</button>
             </div>
         );
     }

@@ -14,7 +14,7 @@ class TodoList extends Component {
         return (
         <div>
             <ul className='list--container'>
-                {this.props.todos.map(todo=> <TodoItem {...todo} removeTodo={this.props.removeTodo}/>)}
+                {this.props.todos.map(todo=> <TodoItem key={todo.id} {...todo} clearList={this.props.clearList} removeTodo={this.props.removeTodo} checkTodo={this.props.checkTodo}/>)}
             </ul>
         </div>
         );
