@@ -1,90 +1,107 @@
 import './App.css';
-import React, { Component } from 'react'
 import AddTodo from './Components/AddTodo';
 import Header from './Components/Header';
 import SwitchTheme from './Components/Theme';
 import TodoList from './Components/TodoList';
 import Counter from './Components/TodosCounter';
+import { useState, useEffect } from 'react';
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            todos: [],
-         };
-    }
+function App(props)  {
 
-    addTodo=(title)=>{
+    const [todos, setTodos] = useState([])
+    // let url = 'http://localhost:5000/todos';
+
+    // const fetchTodos = ()=>{
+	// 	fetch(url)
+	// 		.then(r=>{
+	// 			if(r.ok){
+	// 				return r.json()
+	// 			}
+	// 		})
+	// 		.then(data=> {
+	// 			setTodos(data)
+	// 		})
+	// 		.catch( err=>console.warn(err) );
+	// }
+
+  const addTodo=(title)=>{
         let todoItem = {
             id:new Date().getTime().toString(),
             title: title,
             isComplete: false,
         }
+        // fetch(url, {
+        //     method:"Post",
+        //     body:JSON.stringify(todoItem),
+        //     headers:{
+        //         "content-type":"application/json"
+        //     }
+        // })
+        // .then(res=>{
+        //     if(res.ok){
+        //         return res.json()
+        //     }
+        // })
+        // .then(todo=>{
+        //     setTodos(...todos,todo)
+        // })
         
-        this.setState({
-            todos:[...this.state.todos,todoItem]
-        })
+        setTodos([...todos,todoItem])
+    }
 
+   const removeTodo=(todoid)=>{
+        let todosRemove = todos.filter(todo=>todo.id !== todoid);
 
+        setTodos([...todosRemove])
+    }
+
+   const checkTodo=(todoid)=>{
+        let todosCheck = todos.map(todo=>todo.id === todoid ? {...todo, isComplete:!todo.isComplete} : todo)
+
+        setTodos([...todosCheck])
 
     }
 
-    removeTodo=(todoid)=>{
-        let todosRemove = this.state.todos.filter(todo=>todo.id !== todoid);
-
-        this.setState({
-            todos:[...todosRemove]
-        })
+   const clearTodoList=()=>{
+        setTodos([])
     }
 
-    checkTodo=(todoid)=>{
-        let todosCheck = this.state.todos.map(todo=>todo.id === todoid ? {...todo, isComplete:!todo.isComplete} : todo)
+    useEffect(()=>{
+        getLS()
+    },[]);
 
-        this.setState({todos:[...todosCheck]})
-
-
-        console.log(this.state.todos);
-    }
-
-    clearTodoList=()=>{
-        this.setState({todos:[]})
-    }
-
-    componentDidMount(){
-        this.getLS();
-    }
-
-    componentDidUpdate(){
-        this.saveToLS();
-    }
+    useEffect(()=>{
+        saveToLS()
+    },[todos]);
 
 
-    saveToLS=()=>{
-         localStorage.setItem('todos', JSON.stringify(this.state.todos))
+
+   const saveToLS=()=>{
+         localStorage.setItem('todos', JSON.stringify(todos))
         }
     
 
-    getLS=()=>{
+   const getLS=()=>{
         if(localStorage.getItem('todos') === null){
             localStorage.setItem('todos',  JSON.stringify([]))
         }else{
           let todoLocal = JSON.parse(localStorage.getItem('todos'))
-          this.setState({todos:todoLocal})
+          setTodos(todoLocal)
         }
     }
+
+    // useEffect(fetchTodos,[])
    
 
-    render() {
-        return (
-            <div>
-                <SwitchTheme />
-                <Header /> 
-                <AddTodo addTodo={this.addTodo} items={this.state.todos} clearList={this.clearTodoList}/>
-                <TodoList todos={this.state.todos} removeTodo={this.removeTodo} checkTodo={this.checkTodo}/>
-                <Counter todos={this.state.todos}/>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <SwitchTheme />
+            <Header /> 
+            <AddTodo addTodo={addTodo} items={todos} clearList={clearTodoList}/>
+            <TodoList todos={todos} removeTodo={removeTodo} checkTodo={checkTodo}/>
+            <Counter todos={todos}/>
+        </div>
+    );
 }
 
 export default App;
