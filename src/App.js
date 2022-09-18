@@ -9,56 +9,89 @@ import { useState, useEffect } from 'react';
 function App(props)  {
 
     const [todos, setTodos] = useState([])
-    // let url = 'http://localhost:5000/todos';
+    let url = 'http://localhost:5000/todos';
 
-    // const fetchTodos = ()=>{
-	// 	fetch(url)
-	// 		.then(r=>{
-	// 			if(r.ok){
-	// 				return r.json()
-	// 			}
-	// 		})
-	// 		.then(data=> {
-	// 			setTodos(data)
-	// 		})
-	// 		.catch( err=>console.warn(err) );
-	// }
+    const fetchTodos = ()=>{
+		fetch(url)
+			.then(r=>{
+				if(r.ok){
+					return r.json()
+				}
+			})
+			.then(data=> {
+				setTodos(data)
+			})
+			.catch( err=>console.warn(err) );
+	}
 
   const addTodo=(title)=>{
         let todoItem = {
-            id:new Date().getTime().toString(),
+            // id:new Date().getTime().toString(),
             title: title,
             isComplete: false,
         }
-        // fetch(url, {
-        //     method:"Post",
-        //     body:JSON.stringify(todoItem),
-        //     headers:{
-        //         "content-type":"application/json"
-        //     }
-        // })
-        // .then(res=>{
-        //     if(res.ok){
-        //         return res.json()
-        //     }
-        // })
-        // .then(todo=>{
-        //     setTodos(...todos,todo)
-        // })
+        fetch(url, {
+            method:"Post",
+            body:JSON.stringify(todoItem),
+            headers:{
+                "content-type":"application/json"
+            }
+        })
+        .then(res=>{
+            if(res.ok){
+                return res.json()
+            }
+        })
+        .then(todo=>{
+            setTodos([...todos,todo])
+        })
+        console.log(todos);
         
-        setTodos([...todos,todoItem])
+        // setTodos([...todos,todoItem])
     }
 
    const removeTodo=(todoid)=>{
         let todosRemove = todos.filter(todo=>todo.id !== todoid);
 
-        setTodos([...todosRemove])
+        fetch(url, {
+            method:"Delete",
+            body:JSON.stringify(todosRemove),
+            headers:{
+                "content-type":"application/json"
+            }
+        })
+        .then(res=>{
+            if(res.ok){
+                return res.json()
+            }
+        })
+        .then(todo=>{
+            setTodos([...todosRemove])
+        })
+
+        // setTodos([...todosRemove])
     }
 
    const checkTodo=(todoid)=>{
         let todosCheck = todos.map(todo=>todo.id === todoid ? {...todo, isComplete:!todo.isComplete} : todo)
 
-        setTodos([...todosCheck])
+        fetch(url, {
+            method:"Post",
+            body:JSON.stringify(todosCheck),
+            headers:{
+                "content-type":"application/json"
+            }
+        })
+        .then(res=>{
+            if(res.ok){
+                return res.json()
+            }
+        })
+        .then(todo=>{
+            setTodos([...todosCheck])
+        })
+
+        // setTodos([...todosCheck])
 
     }
 
@@ -90,7 +123,7 @@ function App(props)  {
         }
     }
 
-    // useEffect(fetchTodos,[])
+    useEffect(fetchTodos,[])
    
 
     return (
