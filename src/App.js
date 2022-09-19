@@ -11,6 +11,8 @@ function App(props)  {
     const [todos, setTodos] = useState([])
     let url = 'http://localhost:5000/todos';
 
+    
+
     const fetchTodos = ()=>{
 		fetch(url)
 			.then(r=>{
@@ -26,7 +28,7 @@ function App(props)  {
 
   const addTodo=(title)=>{
         let todoItem = {
-            // id:new Date().getTime().toString(),
+            id:new Date().getTime().toString(),
             title: title,
             isComplete: false,
         }
@@ -44,16 +46,15 @@ function App(props)  {
         })
         .then(todo=>{
             setTodos([...todos,todo])
-        })
-        console.log(todos);
-        
-        // setTodos([...todos,todoItem])
+        })    
     }
+
+
 
    const removeTodo=(todoid)=>{
         let todosRemove = todos.filter(todo=>todo.id !== todoid);
 
-        fetch(url, {
+        fetch(`${url}/${todoid}`, {
             method:"Delete",
             body:JSON.stringify(todosRemove),
             headers:{
@@ -69,34 +70,29 @@ function App(props)  {
             setTodos([...todosRemove])
         })
 
-        // setTodos([...todosRemove])
     }
 
-   const checkTodo=(todoid)=>{
-        let todosCheck = todos.map(todo=>todo.id === todoid ? {...todo, isComplete:!todo.isComplete} : todo)
-
-        fetch(url, {
-            method:"Post",
-            body:JSON.stringify(todosCheck),
-            headers:{
-                "content-type":"application/json"
-            }
+   const updateTodo=(todoid)=>{
+        fetch(`${url}/${todoid}`, {
+            method:"PUT",
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(todos),
         })
         .then(res=>{
             if(res.ok){
-                return res.json()
+             return res.json();
             }
         })
-        .then(todo=>{
-            setTodos([...todosCheck])
-        })
+        .then(data=>{
+           setTodos(todos.map(todo=>todo.id===todoid?{...todo,isComplete:!todo.isComplete}:todo));
 
-        // setTodos([...todosCheck])
+        })
 
     }
 
    const clearTodoList=()=>{
         setTodos([])
+        
     }
 
     useEffect(()=>{
@@ -131,7 +127,7 @@ function App(props)  {
             <SwitchTheme />
             <Header /> 
             <AddTodo addTodo={addTodo} items={todos} clearList={clearTodoList}/>
-            <TodoList todos={todos} removeTodo={removeTodo} checkTodo={checkTodo}/>
+            <TodoList todos={todos} removeTodo={removeTodo} updateTodo={updateTodo}/>
             <Counter todos={todos}/>
         </div>
     );

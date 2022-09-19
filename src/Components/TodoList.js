@@ -6,7 +6,7 @@ function TodoList (props) {
       return (
         <div>
             <ul className='list--container'>
-                {props.todos.map(todo=> <TodoItem key={todo.id} {...todo} clearList={props.clearList} removeTodo={props.removeTodo} checkTodo={props.checkTodo}/>)}
+                {props.todos.map(todo=> <TodoItem key={todo.id} {...todo} clearList={props.clearList} removeTodo={props.removeTodo} updateTodo={props.updateTodo}/>)}
             </ul>
         </div>
      );
