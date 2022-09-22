@@ -73,10 +73,15 @@ function App(props)  {
     }
 
    const updateTodo=(todoid)=>{
+
+    const updatedTodo = todos.filter(todo=>todo.id===todoid)[0];
+
         fetch(`${url}/${todoid}`, {
-            method:"PUT",
+            method:"PATCH",
             headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify(todos),
+            body: JSON.stringify({
+                isComplete:!updatedTodo.isComplete,
+            }),
         })
         .then(res=>{
             if(res.ok){
@@ -84,7 +89,7 @@ function App(props)  {
             }
         })
         .then(data=>{
-           setTodos(todos.map(todo=>todo.id===todoid?{...todo,isComplete:!todo.isComplete}:todo));
+           setTodos(todos.map(todo=>todo.id===todoid?data:todo));
 
         })
 
