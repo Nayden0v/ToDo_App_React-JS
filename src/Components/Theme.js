@@ -46,7 +46,7 @@ export default function SwitchTheme (){
 
     return (
         <div className="theme">
-            <button class="btn-mode" onClick={switchMode}>{initialText?"Dark Mode":"Light Mode"}</button>
+            <button className="btn-mode" onClick={switchMode}>{initialText?"Dark Mode":"Light Mode"}</button>
         </div>
     )
 }
