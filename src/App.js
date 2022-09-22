@@ -11,22 +11,7 @@ function App(props)  {
     const [todos, setTodos] = useState([])
     let url = 'http://localhost:5000/todos';
 
-    
-
-    const fetchTodos = ()=>{
-		fetch(url)
-			.then(r=>{
-				if(r.ok){
-					return r.json()
-				}
-			})
-			.then(data=> {
-				setTodos(data)
-			})
-			.catch( err=>console.warn(err) );
-	}
-
-  const addTodo=(title)=>{
+    const addTodo=(title)=>{
         let todoItem = {
             id:new Date().getTime().toString(),
             title: title,
@@ -46,12 +31,10 @@ function App(props)  {
         })
         .then(todo=>{
             setTodos([...todos,todo])
-        })    
+        })
     }
 
-
-
-   const removeTodo=(todoid)=>{
+    const removeTodo=(todoid)=>{
         let todosRemove = todos.filter(todo=>todo.id !== todoid);
 
         fetch(`${url}/${todoid}`, {
@@ -72,7 +55,7 @@ function App(props)  {
 
     }
 
-   const updateTodo=(todoid)=>{
+    const updateTodo=(todoid)=>{
         fetch(`${url}/${todoid}`, {
             method:"PUT",
             headers: { 'Content-type': 'application/json' },
@@ -90,42 +73,43 @@ function App(props)  {
 
     }
 
-   const clearTodoList=()=>{
+    const clearTodoList=()=>{
         setTodos([])
-        
+
     }
 
+    // must decide weather to get initial todos from server, or from local storate...
     useEffect(()=>{
-        getLS()
-    },[]);
+        fetch(url)
+        .then(r=>{
+            if(r.ok){
+                return r.json()
+            }
+        })
+        .then(data=> {
+            setTodos(data)
+        })
+        .catch( err=>console.warn(err) );
+    },[url])
 
     useEffect(()=>{
-        saveToLS()
-    },[todos]);
-
-
-
-   const saveToLS=()=>{
-         localStorage.setItem('todos', JSON.stringify(todos))
-        }
-    
-
-   const getLS=()=>{
         if(localStorage.getItem('todos') === null){
             localStorage.setItem('todos',  JSON.stringify([]))
         }else{
           let todoLocal = JSON.parse(localStorage.getItem('todos'))
           setTodos(todoLocal)
         }
-    }
+    },[]);
 
-    useEffect(fetchTodos,[])
-   
+    useEffect(()=>{
+        localStorage.setItem('todos', JSON.stringify(todos))
+    },[todos]);
+
 
     return (
         <div>
             <SwitchTheme />
-            <Header /> 
+            <Header />
             <AddTodo addTodo={addTodo} items={todos} clearList={clearTodoList}/>
             <TodoList todos={todos} removeTodo={removeTodo} updateTodo={updateTodo}/>
             <Counter todos={todos}/>
