@@ -13,7 +13,8 @@ function App(props)  {
 
     const addTodo=(title)=>{
         let todoItem = {
-            id:new Date().getTime().toString(),
+            // no need to set id. json-server will set it
+            // id:new Date().getTime().toString(),
             title: title,
             isComplete: false,
         }
