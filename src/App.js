@@ -49,8 +49,6 @@ function App(props)  {
         })    
     }
 
-
-
    const removeTodo=(todoid)=>{
         let todosRemove = todos.filter(todo=>todo.id !== todoid);
 
